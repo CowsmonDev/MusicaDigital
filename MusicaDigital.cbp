@@ -33,6 +33,8 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Canciones.cpp" />
+		<Unit filename="src/headers/Canciones.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
