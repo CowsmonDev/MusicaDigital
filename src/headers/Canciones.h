@@ -1,16 +1,15 @@
 #include <string>
-using namespace std;
 class Canciones{
 	public:
-		Canciones(const string & direccion) const;
+		Canciones(const std::string & direccion) const;
 	private: 
 		struct cancion {
-			string id;
-			string nombre;
-			string interprete;
-			string lanzamiento;
-			string duracion;
-			string genero;
+			std::string id;
+			std::string nombre;
+			std::string interprete;
+			std::string lanzamiento;
+			std::string duracion;
+			std::string genero;
 			unsigned int repoducciones;
 		};
 
