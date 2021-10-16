@@ -1,8 +1,10 @@
 #include <string>
 class Canciones{
 	public:
-		Canciones(const std::string & direccion) const;
+		Canciones(const string & direccion);
+		[]string obtenerTopCancionesGenero(string genero) const;
 	private: 
+		void agregarElemento(const string & elemento);
 		struct cancion {
 			std::string id;
 			std::string nombre;
