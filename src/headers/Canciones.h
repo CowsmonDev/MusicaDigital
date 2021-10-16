@@ -1,5 +1,4 @@
 #include <string>
-using namespace std;
 class Canciones{
 	public:
 		Canciones(const string & direccion);
@@ -7,13 +6,13 @@ class Canciones{
 	private: 
 		void agregarElemento(const string & elemento);
 		struct cancion {
-			string id;
-			string nombre;
-			string interprete;
-			string lanzamiento;
-			string duracion;
-			string genero;
-			unsigned int reproducciones;
+			std::string id;
+			std::string nombre;
+			std::string interprete;
+			std::string lanzamiento;
+			std::string duracion;
+			std::string genero;
+			unsigned int repoducciones;
 		};
 
 		Lista<cancion> * listado;
