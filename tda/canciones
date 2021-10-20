@@ -1,0 +1,13 @@
+CLASS Canciones [elemento:Cancion]
+IMPORTS
+    Lista
+BASIC CONSTRUCTORS
+    inicCanciones, agregarCancion
+EFFECTIVE
+TYPE
+    Canciones
+OPERATIONS
+    <operations>
+AXIOMS  <varTypes>
+    <axioms>
+END-CLASS

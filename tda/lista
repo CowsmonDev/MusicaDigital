@@ -1,0 +1,27 @@
+CLASS Lista [elemento:ANY]
+IMPORTS
+    Natural
+BASIC CONSTRUCTORS
+    inicLista, agregarElemento
+EFFECTIVE
+TYPE
+    Lista
+OPERATIONS
+    inicLista: -> Lista
+    longLista: Lista -> Natural;
+    agregarElemento: Lista(l) * Natural(i) * Elemento -> Lista
+        pre: (i >= 1) and (i <= longLista(l) + 1);
+    eliminarElemento: Lista(l) * Natural(i) -> Lista
+        pre: (i >= 1) and (i <= longLista(l));
+    obtenerElemento: Lista(l) * Natural(i) -> Elemento
+        pre: (i >= 1) and (i <= longLista(l));
+AXIOMS l: Lista; e: Elemento; i,j: Natural;
+    longLista(inicLista()) = 0;
+    longLista(agregarElemento(l, i, e)) = 1 + longLista(l);
+    (i == j) => (eliminarElemento(agregarElemento(l, i, e), j) = l);
+    (i > j) => (eliminarElemento(agregarElemento(l, i, e), j) = agregarElemento(eliminarElemento(l, j), i-1, e));
+    (i < j) => (eliminarElemento(agregarElemento(l, i, e), j) = agregarElemento(eliminarElemento(l, j-1), i, e));
+    (i == j) => (obtenerElemento(agregarElemento(l, i, e), j) = e);
+    (i > j) => (obtenerElemento(agregarElemento(l, i, e), j) = obtenerElemento(l, j));
+    (i < j) => (obtenerElemento(agregarElemento(l, i, e), j) = obtenerElemento(l, j-1));
+END-CLASS
