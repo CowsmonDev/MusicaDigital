@@ -1,4 +1,6 @@
 #include "headers/Lista.h"
+#include <string>
+#include "headers/Canciones.h"
 
 using namespace std;
 
@@ -33,11 +35,6 @@ void Lista<T>::eliminarElemento(int indice){
 }
 
 template<typename T>
-void Lista<T>::eliminarPrimero(){
-	this->eliminarElemento(0);
-}
-
-template<typename T>
 T Lista<T>::obtenerElemento() const{
 	return primero->elemento;
 }
@@ -46,3 +43,5 @@ template<typename T>
 Lista<T> * Lista<T>::obtenerSiguiente() const{
 	return primero->siguiente;
 }
+template class Lista<Canciones::cancion>;
+template class Lista<string>;
