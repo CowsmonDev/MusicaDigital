@@ -58,4 +58,27 @@ Canciones::Canciones(const string & direccion){
 };
 
 Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & genero) const{
+	Lista<cancion> * cursor = listado;
+	Lista<cancion> * top_canciones_genero = new Lista<cancion>();
+
+	top_canciones_genero->agregarElemento(cursor->obtenerElemento());
+	cursor = cursor->obtenerSiguiente();
+
+	for (int i = 1; i < this->cantidad_canciones; i++){
+		if(cursor->obtenerElemento().genero.find(genero) != string::npos){
+			Lista<cancion> * cursor_lista = top_canciones_genero;
+			for(int j = 1; j <= 10; j++){
+				if(cursor_lista->obtenerElemento().reproducciones > cursor->obtenerElemento().reproducciones){
+					cursor_lista->agregarElemento(cursor->obtenerElemento());
+					if(!(i < 10))
+						top_canciones_genero->eliminarElemento(0);
+					break;
+				}
+				cursor_lista = cursor_lista->obtenerSiguiente();
+			}
+		}
+		cursor = cursor->obtenerSiguiente();
+	}
+	
+	return top_canciones_genero;
 }
