@@ -1,16 +1,19 @@
+
+#ifndef Lista_T
+#define Lista_T
 template <typename T>
 
 class Lista{
 	public:
 		Lista();
 		void agregarElemento(T elemento);
-		void eliminarElemento(int indice);
+		void eliminarElemento();
 		T obtenerElemento() const;
 		Lista<T> * obtenerSiguiente() const;
+		void operator=(Lista<T> * nuevaLista);
+		bool listaVacia() const;
 	private:
-		struct Nodo{
-			T elemento;
-			Lista<T> * siguiente;
-		};
-		Nodo * primero;
+		T elemento;
+		Lista<T> * siguiente;
 };
+#endif
