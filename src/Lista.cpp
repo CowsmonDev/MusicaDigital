@@ -45,6 +45,5 @@ template<typename T>
 bool Lista<T>::listaVacia() const{
 	return (this->siguiente == NULL);
 }
-
 template class Lista<Canciones::cancion>;
 template class Lista<string>;
