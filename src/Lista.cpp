@@ -1,6 +1,6 @@
 #include "headers/Lista.h"
-#include "headers/Canciones.h"
 #include <string>
+#include "headers/Canciones.h"
 
 using namespace std;
 
@@ -18,16 +18,11 @@ void Lista<T>::agregarElemento(T elemento){
 }
 
 template<typename T>
-void Lista<T>::eliminarElemento(int indice){
+void Lista<T>::eliminarElemento(){
 	Lista<T> * eliminado = this;
 	this->elemento = this->siguiente->elemento;
 	this->siguiente = this->siguiente->siguiente;
 	delete eliminado;
-}
-
-template<typename T>
-void Lista<T>::eliminarPrimero(){
-	this->eliminarElemento(0);
 }
 
 template<typename T>
@@ -41,9 +36,9 @@ Lista<T> * Lista<T>::obtenerSiguiente() const{
 }
 
 template<typename T>
-void Lista<T>::operator=(Lista<T> nuevaLista){
-	this->siguiente = nuevaLista->siguiente;
-	this->elemento = nuevaLista->elemento;
+void Lista<T>::operator=(Lista<T> * nuevaLista){
+	this-> elemento = nuevaLista->elemento;
+	this-> siguiente = nuevaLista->siguiente;
 }
 
 template<typename T>
