@@ -13,17 +13,7 @@ class Lista{
 		void operator=(Lista<T> nuevaLista);
 		bool listaVacia() const;
 	private:
-<<<<<<< Updated upstream
-		struct Nodo{
-			T elemento;
-			Lista<T> * siguiente;
-		}
-		Nodo * primero;
+	T elemento;
+	Lista<T> * siguiente;
 };
-=======
-		T elemento;
-		Lista<T> * siguiente;
-};
-
 #endif
->>>>>>> Stashed changes

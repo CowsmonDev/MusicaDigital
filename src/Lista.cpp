@@ -1,4 +1,6 @@
 #include "headers/Lista.h"
+#include "headers/Canciones.h"
+#include <string>
 
 using namespace std;
 
@@ -35,10 +37,6 @@ T Lista<T>::obtenerElemento() const{
 
 template<typename T>
 Lista<T> * Lista<T>::obtenerSiguiente() const{
-<<<<<<< Updated upstream
-	return primero->siguiente;
-}
-=======
 	return siguiente;
 }
 
@@ -55,4 +53,3 @@ bool Lista<T>::listaVacia() const{
 
 template class Lista<Canciones::cancion>;
 template class Lista<string>;
->>>>>>> Stashed changes
