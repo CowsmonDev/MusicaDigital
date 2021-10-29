@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <clocale>
+#include <regex>
 
 using namespace std;
 
@@ -71,7 +72,7 @@ Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & 
 				if(cursor_lista->obtenerElemento().reproducciones > cursor->obtenerElemento().reproducciones){
 					cursor_lista->agregarElemento(cursor->obtenerElemento());
 					if(!(i < 10))
-						top_canciones_genero->eliminarElemento(0);
+						top_canciones_genero->eliminarElemento();
 					break;
 				}
 				cursor_lista = cursor_lista->obtenerSiguiente();
@@ -81,4 +82,37 @@ Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & 
 	}
 	
 	return top_canciones_genero;
+}
+
+Lista<Canciones::cancion> * Canciones::busqueda(const string texto) const
+{
+	Lista<cancion> * cursor = listado;
+	Lista<cancion> * listaResultado = new Lista<cancion>();
+
+	// Utilizar la libreria regex para expresiones regulares
+	regex filtro(texto, regex_constants::ECMAScript | regex_constants::icase);
+
+	while (!cursor->listaVacia())
+	{
+		// Comprobar si la busqueda está en el nombre y lo agrega a la lista resultante
+		if (regex_search(cursor->obtenerElemento().nombre, filtro))
+			listaResultado->agregarElemento(cursor->obtenerElemento());
+		cursor = cursor->obtenerSiguiente();
+	}
+}
+
+Lista<Canciones::cancion> * Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
+{
+	Lista<cancion> * cursor = listado;
+	Lista<cancion> * listaResultado = new Lista<cancion>();
+
+	while (!cursor->listaVacia())
+	{
+		// Comprobar si la fecha entra en el rango y lo agrega a la lista resultante
+		if (cursor->obtenerElemento().lanzamiento >= fInicial && cursor->obtenerElemento().lanzamiento <= fFinal)
+			listaResultado->agregarElemento(cursor->obtenerElemento());
+		cursor = cursor->obtenerSiguiente();
+	}
+
+	return listaResultado;
 }
