@@ -14,9 +14,11 @@ class Canciones{
 		};
 
 		Lista<cancion> * obtenerTopCancionesGenero(const string & genero) const;
+		Lista<cancion> * busqueda(string texto) const;
+		Lista<cancion> * filtrado(unsigned int fInicial, unsigned int fFinal) const;
 	private:
 		void agregarElemento(string & elemento);
-		int cantidad_canciones;
+		unsigned int cantidad_canciones;
 
 		Lista<cancion> * listado;
 };
