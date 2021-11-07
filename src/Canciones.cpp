@@ -59,18 +59,17 @@ Canciones::Canciones(const string & direccion){
 	}
 };
 
-Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & genero) const{
+void Canciones::obtenerTopCancionesGenero(const string & genero) const{
 	Lista<cancion> * cursor = listado;
 	Lista<cancion> * top_canciones_genero = new Lista<cancion>();
 	Lista<cancion> * cursor_lista;
 
-	int j = 0;
 	for (unsigned int i = 0; i < cantidad_canciones; i++){
 		if(cursor->obtenerElemento().genero.find(genero) != string::npos){
 			cursor_lista = top_canciones_genero;
 			for (int h = 0; (!cursor_lista->listaVacia()) && (h<10); h++)
 			{
-				if(cursor_lista->obtenerElemento().reproducciones > cursor->obtenerElemento().reproducciones){
+				if(cursor_lista->obtenerElemento().reproducciones < cursor->obtenerElemento().reproducciones){
 					cursor_lista->agregarElemento(cursor->obtenerElemento());
 					h = 10;
 				}else
@@ -78,14 +77,17 @@ Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & 
 			}
 			if(cursor_lista->listaVacia())
 				cursor_lista->agregarElemento(cursor->obtenerElemento());
-			if(j<10)
-				j++;
-			else
-				top_canciones_genero->eliminarElemento();
 		}
 		cursor = cursor->obtenerSiguiente();
 	}
-	return top_canciones_genero;
+	unsigned int j=10;
+	cout<<"\nTop 10";
+	while(!top_canciones_genero->listaVacia() && (j > 0)){
+		cout<<endl<<"Posicion: "<<j;
+		cout<<toString(top_canciones_genero->obtenerElemento());
+		top_canciones_genero = top_canciones_genero->obtenerSiguiente();
+		j--;
+	}
 }
 
 Lista<Canciones::cancion> * Canciones::busqueda(const string texto) const
@@ -106,30 +108,43 @@ Lista<Canciones::cancion> * Canciones::busqueda(const string texto) const
 	return listaResultado;
 }
 
-Lista<Canciones::cancion> * Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
+void Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
 {
 	Lista<cancion> * cursor = listado;
-	Lista<cancion> * listaResultado = new Lista<cancion>();
-
 	while (!cursor->listaVacia())
 	{
 		// Comprobar si la fecha entra en el rango y lo agrega a la lista resultante
 		if (cursor->obtenerElemento().lanzamiento >= fInicial && cursor->obtenerElemento().lanzamiento <= fFinal)
-			listaResultado->agregarElemento(cursor->obtenerElemento());
+			cout<<this->toString(cursor->obtenerElemento());
 		cursor = cursor->obtenerSiguiente();
 	}
 
-	return listaResultado;
 }
 
 string Canciones::toString() const{
-	string retorno = "[\n";
+	string retorno = "\n|------------------------------  Canciones  ------------------------------|\n";
 	Lista<cancion> * cursor = listado;
 	while(!cursor->listaVacia()){
-		cancion can = cursor->obtenerElemento();
-		retorno.append("(").append(to_string(can.id)).append(", ").append(can.nombre).append(", ").append(can.interprete).append(", ").append(to_string(can.lanzamiento)).append(", ").append(can.duracion).append(", ").append(can.genero).append(", ").append(to_string(can.reproducciones)).append(")\n");
+		retorno.append(toString(cursor->obtenerElemento()));
 		cursor = cursor->obtenerSiguiente();
 	}
-	retorno.append("]");
+	return retorno;
+}
+
+string Canciones::toString(cancion cancion) const{
+	string retorno = "\n------------------------------  Cancion  ------------------------------\n";
+	retorno.append("Nombre: ")
+		.append(cancion.nombre)
+		.append("\nInprete: ")
+		.append(cancion.interprete)
+		.append("\nLanzamiento: ")
+		.append(to_string(cancion.lanzamiento))
+		.append("\nDuracion: ")
+		.append(cancion.duracion)
+		.append("\nGenero: ")
+		.append(cancion.genero)
+		.append("\nReproducciones: ")
+		.append(to_string(cancion.reproducciones))
+		.append("\n-----------------------------------------------------------------------\n");
 	return retorno;
 }

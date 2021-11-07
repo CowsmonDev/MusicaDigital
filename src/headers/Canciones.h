@@ -13,10 +13,11 @@ class Canciones{
 			unsigned int reproducciones;
 		};
 
-		Lista<cancion> * obtenerTopCancionesGenero(const std::string & genero) const;
+		void obtenerTopCancionesGenero(const std::string & genero) const;
 		Lista<cancion> * busqueda(std::string texto) const;
-		Lista<cancion> * filtrado(unsigned int fInicial, unsigned int fFinal) const;
+		void filtrado(unsigned int fInicial, unsigned int fFinal) const;
 		std::string toString() const;
+		std::string toString(cancion cancion) const;
 	private:
 		void agregarElemento(std::string & elemento, unsigned int id);
 		unsigned int cantidad_canciones;

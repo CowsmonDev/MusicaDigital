@@ -7,14 +7,13 @@ using namespace std;
 const Canciones can = Canciones("./src/include/canciones.csv");
 
 string toString(Lista<Canciones::cancion> * & listado){
-        string retorno = "[\n";
+        string retorno = "";
         Lista<Canciones::cancion> * cursor = listado;
         while(!cursor->listaVacia()){
             Canciones::cancion cancion = cursor->obtenerElemento();
-            retorno.append("(").append(to_string(cancion.id)).append(", ").append(cancion.nombre).append(", ").append(cancion.interprete).append(", ").append(to_string(cancion.lanzamiento)).append(", ").append(cancion.duracion).append(", ").append(cancion.genero).append(", ").append(to_string(cancion.reproducciones)).append(")\n");
+            retorno.append(can.toString(cursor->obtenerElemento()));
             cursor = cursor->obtenerSiguiente();
         }
-        retorno.append("]");
         return retorno;
 }
 
@@ -25,7 +24,8 @@ int mostrarMenu(){
         cout<<"1. Buscar Cancion"<<endl;
         cout<<"2. Listar Canciones Entre Fechas"<<endl;
         cout<<"3. Listar Top Canciones Por Genero"<<endl;
-        cout<<"3. Salir"<<endl;
+        cout<<"4. Listar Canciones"<<endl;
+        cout<<"5. Salir"<<endl;
         cout<<"-------------------------------------------------------------------"<<endl;
         string opcion;
         cin>>opcion;
@@ -42,16 +42,16 @@ int mostrarMenu(){
             cin>>primer_fecha;
             cout<<"Fecha Final: ";
             cin>>segunda_fecha;
-            Lista <Canciones::cancion> * resultado = can.filtrado(primer_fecha, segunda_fecha);
-            cout<<toString(resultado)<<endl;
+            can.filtrado(primer_fecha, segunda_fecha);
         }else if(opcion == "3"){
             cout<<"Ingrese El genero a Buscar"<<endl;
             string genero;
             cin>>genero;
-            Lista<Canciones::cancion> * resultado = can.obtenerTopCancionesGenero(genero);
-            cout<<toString(resultado)<<endl;
-        }else if(opcion == "4"){
-            return 1;
+            can.obtenerTopCancionesGenero(genero);
+        }else if(opcion == "4")
+            cout<<can.toString();
+        else if(opcion == "5"){
+            return 0;
         }else{
             cout<<"Esa Opcion no Existe, por favor elige otra"<<endl;
         }
@@ -59,8 +59,6 @@ int mostrarMenu(){
 }
 
 int main(){
-
     mostrarMenu();
     return 0;
-
 }
