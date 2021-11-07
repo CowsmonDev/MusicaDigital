@@ -12,7 +12,8 @@ Lista<T>::Lista(){
 template <typename T>
 void Lista<T>::agregarElemento(T elemento){
 	Lista<T> * nuevaLista = new Lista<T>();
-	nuevaLista = this;
+	nuevaLista->elemento = this->elemento;
+	nuevaLista->siguiente = this->siguiente;
 	this->elemento = elemento;
 	this->siguiente = nuevaLista;
 }
@@ -36,9 +37,10 @@ Lista<T> * Lista<T>::obtenerSiguiente() const{
 }
 
 template<typename T>
-void Lista<T>::operator=(Lista<T> * nuevaLista){
+Lista<T> * Lista<T>::operator=(Lista<T> * nuevaLista){
 	this-> elemento = nuevaLista->elemento;
 	this-> siguiente = nuevaLista->siguiente;
+	return this;
 }
 
 template<typename T>

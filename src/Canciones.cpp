@@ -7,10 +7,12 @@
 
 using namespace std;
 
-void Canciones::agregarElemento(string & elemento){
+void Canciones::agregarElemento(string & elemento, unsigned int id){
 	cancion nueva_cancion;
-	size_t pos_final = 0;
+	unsigned int pos_final = 0;
 	string space_delimiter = ",";
+
+	nueva_cancion.id = id;
 
 	pos_final = elemento.find(space_delimiter);
 	nueva_cancion.interprete = elemento.substr(0, pos_final);
@@ -37,12 +39,11 @@ void Canciones::agregarElemento(string & elemento){
 	elemento.erase(0, pos_final + space_delimiter.length());
 
 	listado->agregarElemento(nueva_cancion);
-
 }
 
 
 Canciones::Canciones(const string & direccion){
-	this->listado = new Lista<cancion>();
+	listado = new Lista<cancion>();
 	setlocale(LC_ALL, "");
 	ifstream archivo(direccion);
 	if(!archivo.is_open())
@@ -50,11 +51,11 @@ Canciones::Canciones(const string & direccion){
 	else{
 		string linea;
 		getline(archivo, linea);
-		this->cantidad_canciones = atoi(linea.c_str());
-		int cantidad_canciones = atoi(linea.c_str());
+		cantidad_canciones = atoi(linea.c_str());
+		unsigned int i = cantidad_canciones;
 		cout<< "Se cargaron " << cantidad_canciones << " canciones." << endl;
 		while (getline(archivo, linea))
-			agregarElemento(linea);
+			agregarElemento(linea, i--);
 	}
 };
 
@@ -64,7 +65,7 @@ Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & 
 	Lista<cancion> * cursor_lista;
 
 	int j = 0;
-	for (int i = 1; i < this->cantidad_canciones; i++){
+	for (unsigned int i = 0; i < cantidad_canciones; i++){
 		if(cursor->obtenerElemento().genero.find(genero) != string::npos){
 			cursor_lista = top_canciones_genero;
 			for (int h = 0; (!cursor_lista->listaVacia()) && (h<10); h++)
@@ -72,7 +73,7 @@ Lista<Canciones::cancion> * Canciones::obtenerTopCancionesGenero(const string & 
 				if(cursor_lista->obtenerElemento().reproducciones > cursor->obtenerElemento().reproducciones){
 					cursor_lista->agregarElemento(cursor->obtenerElemento());
 					h = 10;
-				}else 
+				}else
 					cursor_lista = cursor_lista->obtenerSiguiente();
 			}
 			if(cursor_lista->listaVacia())
@@ -102,6 +103,7 @@ Lista<Canciones::cancion> * Canciones::busqueda(const string texto) const
 			listaResultado->agregarElemento(cursor->obtenerElemento());
 		cursor = cursor->obtenerSiguiente();
 	}
+	return listaResultado;
 }
 
 Lista<Canciones::cancion> * Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
@@ -118,4 +120,16 @@ Lista<Canciones::cancion> * Canciones::filtrado(const unsigned int fInicial, con
 	}
 
 	return listaResultado;
+}
+
+string Canciones::toString() const{
+	string retorno = "[\n";
+	Lista<cancion> * cursor = listado;
+	while(!cursor->listaVacia()){
+		cancion can = cursor->obtenerElemento();
+		retorno.append("(").append(to_string(can.id)).append(", ").append(can.nombre).append(", ").append(can.interprete).append(", ").append(to_string(can.lanzamiento)).append(", ").append(can.duracion).append(", ").append(can.genero).append(", ").append(to_string(can.reproducciones)).append(")\n");
+		cursor = cursor->obtenerSiguiente();
+	}
+	retorno.append("]");
+	return retorno;
 }
