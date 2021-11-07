@@ -1,4 +1,25 @@
 # depslib dependency file v1.0
-1633126120 source:d:\onedrive\escuela\ayda\laboratorio\trabajo final\musicadigital\main.cpp
+1636322036 source:d:\onedrive\escuela\ayda\laboratorio\trabajo final\musicadigital\main.cpp
 	<iostream>
+	"src/headers/Canciones.h"
+	<string>
+
+1636316612 source:d:\onedrive\escuela\ayda\laboratorio\trabajo final\musicadigital\src\lista.cpp
+	"headers/Lista.h"
+	<string>
+	"headers/Canciones.h"
+
+1636315333 d:\onedrive\escuela\ayda\laboratorio\trabajo final\musicadigital\src\headers\lista.h
+
+1636322832 d:\onedrive\escuela\ayda\laboratorio\trabajo final\musicadigital\src\headers\canciones.h
+	<string>
+	"Lista.h"
+
+1636321581 source:d:\onedrive\escuela\ayda\laboratorio\trabajo final\musicadigital\src\canciones.cpp
+	"headers/Canciones.h"
+	<iostream>
+	<string>
+	<fstream>
+	<clocale>
+	<regex>
 

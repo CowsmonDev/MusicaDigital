@@ -4,7 +4,7 @@ class Canciones{
 	public:
 		Canciones(const std::string & direccion);
 		struct cancion {
-			std::string id;
+			unsigned int id;
 			std::string nombre;
 			std::string interprete;
 			unsigned int lanzamiento;
@@ -13,11 +13,13 @@ class Canciones{
 			unsigned int reproducciones;
 		};
 
-		Lista<cancion> * obtenerTopCancionesGenero(const string & genero) const;
-		Lista<cancion> * busqueda(string texto) const;
-		Lista<cancion> * filtrado(unsigned int fInicial, unsigned int fFinal) const;
+		void obtenerTopCancionesGenero(const std::string & genero) const;
+		Lista<cancion> * busqueda(std::string texto) const;
+		void filtrado(unsigned int fInicial, unsigned int fFinal) const;
+		std::string toString() const;
+		std::string toString(cancion cancion) const;
 	private:
-		void agregarElemento(string & elemento);
+		void agregarElemento(std::string & elemento, unsigned int id);
 		unsigned int cantidad_canciones;
 
 		Lista<cancion> * listado;
