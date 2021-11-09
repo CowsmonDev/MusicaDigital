@@ -5,21 +5,64 @@
 
 using namespace std;
 
+/*
+	* -> una palabra
+	? -> un caracter
+	sin acentos -> como si la consola los reconociera en primer lugar
+*/
 Lista<Canciones::Cancion> * Canciones::busqueda(const string texto) const
 {
 	Lista<Cancion> * cursor = listado;
 	Lista<Cancion> * listaResultado = new Lista<Cancion>();
 
-	// Utilizar la libreria regex para expresiones regulares
-	regex filtro(texto, regex_constants::ECMAScript | regex_constants::icase);
-
-	while (cursor != nullptr)
+	while (!cursor->listaVacia())
 	{
-		// Comprobar si la busqueda está en el nombre y lo agrega a la lista resultante
-		if (regex_search(cursor->obtenerElemento().nombre, filtro))
+		if (busquedaPorPatron(cursor->obtenerElemento().nombre, quitarAcentos(texto)))
 			listaResultado->agregarElemento(cursor->obtenerElemento());
 		cursor = cursor->obtenerSiguiente();
 	}
+
+	return listaResultado;
+}
+
+bool Canciones::busquedaPorPatron(const string texto, const string patron) const
+{
+	if (patron.empty()) return texto.empty();
+
+	if (patron[1] == '*')
+		// x* coincide con una cadena vacía o con al menos un carácter: x* -> xx*
+		// *s es para asegurar que s no está vacío
+		return busquedaPorPatron(texto, patron.substr(2)) || !texto.empty() && (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron);
+	else
+		return !texto.empty() && (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron.substr(1));
+}
+
+string Canciones::quitarAcentos(string texto) const
+{
+	string newString = texto; // No funciona reemplazando directamente
+    for(int i=0; i < texto.size(); i++){
+        if (newString[i] == 'á')
+			newString[i] == 'a';
+		else if (newString[i] == 'Á')
+			newString[i] == 'A';
+		else if (newString[i] == 'é')
+			newString[i] == 'e';
+		else if (newString[i] == 'É')
+			newString[i] == 'E';
+		else if (newString[i] == 'í')
+			newString[i] == 'i';
+		else if (newString[i] == 'Í')
+			newString[i] == 'I';
+		else if (newString[i] == 'ó')
+			newString[i] == 'o';
+		else if (newString[i] == 'Ó')
+			newString[i] == 'O';
+		else if (newString[i] == 'ú')
+			newString[i] == 'u';
+		else if (newString[i] == 'Ú')
+			newString[i] == 'U';
+    }
+	return newString;
 }
 
 Lista<Canciones::Cancion> * Canciones::filtrado(const unsigned int inicial, const unsigned int final) const
@@ -27,7 +70,7 @@ Lista<Canciones::Cancion> * Canciones::filtrado(const unsigned int inicial, cons
 	Lista<Cancion> * cursor = listado;
 	Lista<Cancion> * listaResultado = new Lista<Cancion>();
 
-	while (cursor != nullptr)
+	while (!cursor->listaVacia())
 	{
 		// Comprobar si la fecha entra en el rango y lo agrega a la lista resultante
 		if (cursor->obtenerElemento().lanzamiento >= inicial && cursor->obtenerElemento().lanzamiento <= final)

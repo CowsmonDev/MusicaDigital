@@ -21,6 +21,8 @@ class Canciones{
 		Lista<Cancion> * filtrado(unsigned int inicial, unsigned int final) const;
 	private:
 		void agregarElemento(string & elemento);
+		string quitarAcentos(string texto) const;
+		bool busquedaPorPatron(string texto, string patron) const;
 		unsigned int cantidad_canciones;
 
 		Lista<Cancion> * listado;
