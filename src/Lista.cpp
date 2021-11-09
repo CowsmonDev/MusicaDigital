@@ -6,15 +6,16 @@ using namespace std;
 
 template <typename T>
 Lista<T>::Lista(){
-	this->siguiente = nullptr;
+	this->siguiente = NULL;
 }
 
 template <typename T>
 void Lista<T>::agregarElemento(T elemento){
 	Lista<T> * nuevaLista = new Lista<T>();
-	nuevaLista = this;
+	nuevaLista->elemento = this->elemento;
+	nuevaLista->siguiente = this->siguiente;
 	this->elemento = elemento;
-	this->siguiente = nullptr;
+	this->siguiente = nuevaLista;
 }
 
 template<typename T>
@@ -36,14 +37,15 @@ Lista<T> * Lista<T>::obtenerSiguiente() const{
 }
 
 template<typename T>
-void Lista<T>::operator=(Lista<T> * nuevaLista){
+Lista<T> * Lista<T>::operator=(Lista<T> * nuevaLista){
 	this-> elemento = nuevaLista->elemento;
 	this-> siguiente = nuevaLista->siguiente;
+	return this;
 }
 
 template<typename T>
 bool Lista<T>::listaVacia() const{
-	return (this->siguiente == nullptr);
+	return (this->siguiente == NULL);
 }
-template class Lista<Canciones::Cancion>;
+template class Lista<Canciones::cancion>;
 template class Lista<string>;

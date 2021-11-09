@@ -1,29 +1,28 @@
 #include <string>
 #include "Lista.h"
-
-using namespace std;
-
 class Canciones{
 	public:
-		Canciones(const string & direccion);
-		struct Cancion {
-			string id;
-			string nombre;
-			string interprete;
+		Canciones(const std::string & direccion);
+		struct cancion {
+			unsigned int id;
+			std::string nombre;
+			std::string interprete;
 			unsigned int lanzamiento;
-			string duracion;
-			string genero;
+			std::string duracion;
+			std::string genero;
 			unsigned int reproducciones;
 		};
 
-		Lista<Cancion> * obtenerTopCancionesGenero(string genero) const;
-		Lista<Cancion> * busqueda(string texto) const;
-		Lista<Cancion> * filtrado(unsigned int inicial, unsigned int final) const;
+		void obtenerTopCancionesGenero(const std::string & genero) const;
+		Lista<cancion> * busqueda(std::string texto) const;
+		void filtrado(unsigned int fInicial, unsigned int fFinal) const;
+		std::string toString() const;
+		std::string toString(cancion cancion) const;
 	private:
-		void agregarElemento(string & elemento);
-		string quitarAcentos(string texto) const;
+		void agregarElemento(std::string & elemento, unsigned int id);
+    string quitarAcentos(string texto) const;
 		bool busquedaPorPatron(string texto, string patron) const;
 		unsigned int cantidad_canciones;
 
-		Lista<Cancion> * listado;
+		Lista<cancion> * listado;
 };
