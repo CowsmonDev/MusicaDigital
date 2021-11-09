@@ -10,14 +10,15 @@ using namespace std;
 	? -> un caracter
 	sin acentos -> como si la consola los reconociera en primer lugar
 */
-Lista<Canciones::Cancion> * Canciones::busqueda(const string texto) const
+Lista<Canciones::Cancion> * Canciones::busqueda(string texto) const
 {
 	Lista<Cancion> * cursor = listado;
 	Lista<Cancion> * listaResultado = new Lista<Cancion>();
+	texto = quitarAcentos(texto);
 
 	while (!cursor->listaVacia())
 	{
-		if (busquedaPorPatron(cursor->obtenerElemento().nombre, quitarAcentos(texto)))
+		if (busquedaPorPatron(cursor->obtenerElemento().nombre, texto))
 			listaResultado->agregarElemento(cursor->obtenerElemento());
 		cursor = cursor->obtenerSiguiente();
 	}
@@ -29,10 +30,8 @@ bool Canciones::busquedaPorPatron(const string texto, const string patron) const
 {
 	if (patron.empty()) return texto.empty();
 
-	if (patron[1] == '*')
-		// x* coincide con una cadena vacía o con al menos un carácter: x* -> xx*
-		// *s es para asegurar que s no está vacío
-		return busquedaPorPatron(texto, patron.substr(2)) || !texto.empty() && (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron);
+	if (patron[0] == '*')
+		return busquedaPorPatron(texto, patron.substr(1));
 	else
 		return !texto.empty() && (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron.substr(1));
 }
