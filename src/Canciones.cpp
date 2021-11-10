@@ -12,10 +12,10 @@ using namespace std;
 	? -> un caracter
 	sin acentos -> como si la consola los reconociera en primer lugar
 */
-Lista<Canciones::Cancion> * Canciones::busqueda(string texto) const
+Lista<Canciones::cancion> * Canciones::busqueda(string texto) const
 {
-	Lista<Cancion> * cursor = listado;
-	Lista<Cancion> * listaResultado = new Lista<Cancion>();
+	Lista<cancion> * cursor = listado;
+	Lista<cancion> * listaResultado = new Lista<cancion>();
 	texto = quitarAcentos(texto);
 
 	while (!cursor->listaVacia())
@@ -66,10 +66,10 @@ string Canciones::quitarAcentos(string texto) const
 	return newString;
 }
 
-Lista<Canciones::Cancion> * Canciones::filtrado(const unsigned int inicial, const unsigned int final) const
+Lista<Canciones::cancion> * Canciones::filtrado(const unsigned int inicial, const unsigned int final) const
 {
-	Lista<Cancion> * cursor = listado;
-	Lista<Cancion> * listaResultado = new Lista<Cancion>();
+	Lista<cancion> * cursor = listado;
+	Lista<cancion> * listaResultado = new Lista<cancion>();
 
 	while (!cursor->listaVacia())
 	{
