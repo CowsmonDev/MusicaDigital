@@ -20,7 +20,7 @@ class Canciones{
 		std::string toString(cancion cancion) const;
 	private:
 		void agregarElemento(std::string & elemento, unsigned int id);
-    	string quitarAcentos(std::string texto) const;
+    	std::string quitarAcentos(std::string texto) const;
 		bool busquedaPorPatron(std::string texto, std::string patron) const;
 		unsigned int cantidad_canciones;
 
