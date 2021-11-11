@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <clocale>
-#include <regex>
 
 using namespace std;
 
@@ -12,35 +11,44 @@ using namespace std;
 	? -> un caracter
 	sin acentos -> como si la consola los reconociera en primer lugar
 */
-Lista<Canciones::cancion> * Canciones::busqueda(string texto) const
+void Canciones::busqueda(string texto) const
 {
 	Lista<cancion> * cursor = listado;
-	Lista<cancion> * listaResultado = new Lista<cancion>();
+
 	texto = quitarAcentos(texto);
 
 	while (!cursor->listaVacia())
 	{
 		if (busquedaPorPatron(cursor->obtenerElemento().nombre, texto))
-			listaResultado->agregarElemento(cursor->obtenerElemento());
+            cout<<this->toString(cursor->obtenerElemento());
 		cursor = cursor->obtenerSiguiente();
 	}
-
-	return listaResultado;
 }
 
 bool Canciones::busquedaPorPatron(const string texto, const string patron) const
 {
 	if (patron.empty()) return texto.empty();
 
+	if (texto.empty())
+        return (patron[0] == '*' && patron[1] == NULL) || patron.empty();
+
 	if (patron[0] == '*')
-		return busquedaPorPatron(texto, patron.substr(1));
+    {
+        if (patron[1] == NULL)
+            return busquedaPorPatron(texto.substr(1), patron);
+
+        if (texto[0] != patron[1])
+            return busquedaPorPatron(texto.substr(1), patron);
+        else
+            return busquedaPorPatron(texto, patron.substr(1));
+    }
 	else
 		return !texto.empty() && (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron.substr(1));
 }
 
 string Canciones::quitarAcentos(string texto) const
 {
-	string newString = texto; // No funciona reemplazando directamente
+	string newString = texto;
     for(int i=0; i < texto.size(); i++){
         if (newString[i] == 'á')
 			newString[i] == 'a';
@@ -66,20 +74,17 @@ string Canciones::quitarAcentos(string texto) const
 	return newString;
 }
 
-Lista<Canciones::cancion> * Canciones::filtrado(const unsigned int inicial, const unsigned int final) const
+void Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
 {
 	Lista<cancion> * cursor = listado;
-	Lista<cancion> * listaResultado = new Lista<cancion>();
 
 	while (!cursor->listaVacia())
 	{
 		// Comprobar si la fecha entra en el rango y lo agrega a la lista resultante
-		if (cursor->obtenerElemento().lanzamiento >= inicial && cursor->obtenerElemento().lanzamiento <= final)
-			listaResultado->agregarElemento(cursor->obtenerElemento());
+		if (cursor->obtenerElemento().lanzamiento >= fInicial && cursor->obtenerElemento().lanzamiento <= fFinal)
+			cout<<this->toString(cursor->obtenerElemento());
 		cursor = cursor->obtenerSiguiente();
 	}
-
-	return listaResultado;
 }
 
 void Canciones::agregarElemento(string & elemento, unsigned int id){

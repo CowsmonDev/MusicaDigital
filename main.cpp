@@ -33,8 +33,7 @@ int mostrarMenu(){
             cout<<"Ingrese El titulo de la cancion"<<endl;
             string titulo;
             cin>>titulo;
-            Lista<Canciones::cancion> * resultado = can.busqueda(titulo);
-            cout<<toString(resultado)<<endl;
+            can.busqueda(titulo);
         }else if(opcion == "2"){
             unsigned int primer_fecha, segunda_fecha;
             cout<<"Ingrese Las Dos Fechas"<<endl;
