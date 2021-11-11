@@ -23,3 +23,27 @@
 	<clocale>
 	<regex>
 
+1636604719 source:c:\users\dylan\documents\github\musicadigital\main.cpp
+	<iostream>
+	"src/headers/Canciones.h"
+	<string>
+
+1636604604 c:\users\dylan\documents\github\musicadigital\src\headers\canciones.h
+	<string>
+	"Lista.h"
+
+1636502467 c:\users\dylan\documents\github\musicadigital\src\headers\lista.h
+
+1636603315 source:c:\users\dylan\documents\github\musicadigital\src\canciones.cpp
+	"headers/Canciones.h"
+	<iostream>
+	<string>
+	<fstream>
+	<clocale>
+	<regex>
+
+1636502467 source:c:\users\dylan\documents\github\musicadigital\src\lista.cpp
+	"headers/Lista.h"
+	<string>
+	"headers/Canciones.h"
+

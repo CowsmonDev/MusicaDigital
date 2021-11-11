@@ -14,13 +14,13 @@ class Canciones{
 		};
 
 		void obtenerTopCancionesGenero(const std::string & genero) const;
-		Lista<cancion> * busqueda(std::string texto) const;
-		Lista<cancion> * filtrado(unsigned int fInicial, unsigned int fFinal) const;
+		void busqueda(std::string texto) const;
+		void filtrado(unsigned int fInicial, unsigned int fFinal) const;
 		std::string toString() const;
 		std::string toString(cancion cancion) const;
 	private:
 		void agregarElemento(std::string & elemento, unsigned int id);
-    std::string quitarAcentos(std::string texto) const;
+		std::string quitarAcentos(std::string texto) const;
 		bool busquedaPorPatron(std::string texto, std::string patron) const;
 		unsigned int cantidad_canciones;
 
