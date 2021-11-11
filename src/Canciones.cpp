@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <clocale>
-#include <regex>
 
 using namespace std;
 
@@ -15,6 +14,7 @@ using namespace std;
 void Canciones::busqueda(string texto) const
 {
 	Lista<cancion> * cursor = listado;
+
 	texto = quitarAcentos(texto);
 
 	while (!cursor->listaVacia())
