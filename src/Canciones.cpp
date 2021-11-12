@@ -6,86 +6,22 @@
 
 using namespace std;
 
-/*
-	* -> una palabra
-	? -> un caracter
-	sin acentos -> como si la consola los reconociera en primer lugar
-*/
-void Canciones::busqueda(string texto) const
-{
-	Lista<cancion> * cursor = listado;
-
-	texto = quitarAcentos(texto);
-
-	while (!cursor->listaVacia())
-	{
-		if (busquedaPorPatron(cursor->obtenerElemento().nombre, texto))
-            cout<<this->toString(cursor->obtenerElemento());
-		cursor = cursor->obtenerSiguiente();
+Canciones::Canciones(const string & direccion){
+	listado = new Lista<cancion>();
+	setlocale(LC_ALL, "");
+	ifstream archivo(direccion);
+	if(!archivo.is_open())
+		cout << "No se pudo abrir el archivo: " << direccion << endl;
+	else{
+		string linea;
+		getline(archivo, linea);
+		cantidad_canciones = atoi(linea.c_str());
+		unsigned int i = cantidad_canciones;
+		cout<< "Se cargaron " << cantidad_canciones << " canciones." << endl;
+		while (getline(archivo, linea))
+			agregarElemento(linea, i--);
 	}
-}
-
-bool Canciones::busquedaPorPatron(const string texto, const string patron) const
-{
-	if (patron.empty()) return texto.empty();
-
-	if (texto.empty())
-        return (patron[0] == '*' && patron[1] == NULL) || patron.empty();
-
-	if (patron[0] == '*')
-    {
-        if (patron[1] == NULL)
-            return busquedaPorPatron(texto.substr(1), patron);
-
-        if (texto[0] != patron[1])
-            return busquedaPorPatron(texto.substr(1), patron);
-        else
-            return busquedaPorPatron(texto, patron.substr(1));
-    }
-	else
-		return !texto.empty() && (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron.substr(1));
-}
-
-string Canciones::quitarAcentos(string texto) const
-{
-	string newString = texto;
-    for(int i=0; i < texto.size(); i++){
-        if (newString[i] == 'á')
-			newString[i] == 'a';
-		else if (newString[i] == 'Á')
-			newString[i] == 'A';
-		else if (newString[i] == 'é')
-			newString[i] == 'e';
-		else if (newString[i] == 'É')
-			newString[i] == 'E';
-		else if (newString[i] == 'í')
-			newString[i] == 'i';
-		else if (newString[i] == 'Í')
-			newString[i] == 'I';
-		else if (newString[i] == 'ó')
-			newString[i] == 'o';
-		else if (newString[i] == 'Ó')
-			newString[i] == 'O';
-		else if (newString[i] == 'ú')
-			newString[i] == 'u';
-		else if (newString[i] == 'Ú')
-			newString[i] == 'U';
-    }
-	return newString;
-}
-
-void Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
-{
-	Lista<cancion> * cursor = listado;
-
-	while (!cursor->listaVacia())
-	{
-		// Comprobar si la fecha entra en el rango y lo agrega a la lista resultante
-		if (cursor->obtenerElemento().lanzamiento >= fInicial && cursor->obtenerElemento().lanzamiento <= fFinal)
-			cout<<this->toString(cursor->obtenerElemento());
-		cursor = cursor->obtenerSiguiente();
-	}
-}
+};
 
 void Canciones::agregarElemento(string & elemento, unsigned int id){
 	cancion nueva_cancion;
@@ -121,23 +57,81 @@ void Canciones::agregarElemento(string & elemento, unsigned int id){
 	listado->agregarElemento(nueva_cancion);
 }
 
+/*
+	* -> una palabra
+	? -> un caracter
+	sin acentos -> como si la consola los reconociera en primer lugar
+*/
+void Canciones::busqueda(string texto) const{
+	Lista<cancion> * cursor = listado;
 
-Canciones::Canciones(const string & direccion){
-	listado = new Lista<cancion>();
-	setlocale(LC_ALL, "");
-	ifstream archivo(direccion);
-	if(!archivo.is_open())
-		cout << "No se pudo abrir el archivo: " << direccion << endl;
-	else{
-		string linea;
-		getline(archivo, linea);
-		cantidad_canciones = atoi(linea.c_str());
-		unsigned int i = cantidad_canciones;
-		cout<< "Se cargaron " << cantidad_canciones << " canciones." << endl;
-		while (getline(archivo, linea))
-			agregarElemento(linea, i--);
+	texto = quitarAcentos(texto);
+
+	while (!cursor->listaVacia()){
+		if (busquedaPorPatron(cursor->obtenerElemento().nombre, texto))
+		cout<<this->toString(cursor->obtenerElemento());
+		cursor = cursor->obtenerSiguiente();
 	}
-};
+}
+
+bool Canciones::busquedaPorPatron(const string texto, const string patron) const{
+	if (patron.empty()) return texto.empty();
+
+	if (texto.empty())
+        return (patron[0] == '*' && patron[1] == NULL);
+
+	if (patron[0] == '*'){
+		if (patron[1] == NULL)
+		return busquedaPorPatron(texto.substr(1), patron);
+
+		if (texto[0] != patron[1])
+		return busquedaPorPatron(texto.substr(1), patron);
+		else
+		return busquedaPorPatron(texto, patron.substr(1));
+	}
+	else
+		return (texto[0] == patron[0] || patron[0] == '?') && busquedaPorPatron(texto.substr(1), patron.substr(1));
+}
+
+string Canciones::quitarAcentos(string texto) const{
+	string newString = texto;
+	for(int i=0; i < texto.size(); i++){
+		if (newString[i] == 'á')
+				newString[i] == 'a';
+			else if (newString[i] == 'Á')
+				newString[i] == 'A';
+			else if (newString[i] == 'é')
+				newString[i] == 'e';
+			else if (newString[i] == 'É')
+				newString[i] == 'E';
+			else if (newString[i] == 'í')
+				newString[i] == 'i';
+			else if (newString[i] == 'Í')
+				newString[i] == 'I';
+			else if (newString[i] == 'ó')
+				newString[i] == 'o';
+			else if (newString[i] == 'Ó')
+				newString[i] == 'O';
+			else if (newString[i] == 'ú')
+				newString[i] == 'u';
+			else if (newString[i] == 'Ú')
+				newString[i] == 'U';
+	}
+	return newString;
+}
+
+void Canciones::filtrado(const unsigned int fInicial, const unsigned int fFinal) const
+{
+	Lista<cancion> * cursor = listado;
+
+	while (!cursor->listaVacia())
+	{
+		// Comprobar si la fecha entra en el rango y lo agrega a la lista resultante
+		if (cursor->obtenerElemento().lanzamiento >= fInicial && cursor->obtenerElemento().lanzamiento <= fFinal)
+			cout<<this->toString(cursor->obtenerElemento());
+		cursor = cursor->obtenerSiguiente();
+	}
+}
 
 void Canciones::obtenerTopCancionesGenero(const string & genero) const{
 	Lista<cancion> * cursor = listado;

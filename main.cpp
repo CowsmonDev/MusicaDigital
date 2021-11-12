@@ -6,17 +6,6 @@ using namespace std;
 
 const Canciones can = Canciones("./src/include/canciones.csv");
 
-string toString(Lista<Canciones::cancion> * & listado){
-        string retorno = "";
-        Lista<Canciones::cancion> * cursor = listado;
-        while(!cursor->listaVacia()){
-            Canciones::cancion cancion = cursor->obtenerElemento();
-            retorno.append(can.toString(cursor->obtenerElemento()));
-            cursor = cursor->obtenerSiguiente();
-        }
-        return retorno;
-}
-
 int mostrarMenu(){
     while(true){
         cout<<"--------------------------- BIENVENIDOS ---------------------------"<<endl;

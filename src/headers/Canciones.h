@@ -1,3 +1,5 @@
+#ifndef Canciones_T
+#define Canciones_T
 #include <string>
 #include "Lista.h"
 class Canciones{
@@ -12,7 +14,7 @@ class Canciones{
 			std::string genero;
 			unsigned int reproducciones;
 		};
-
+		void agregarElemento(std::string & elemento, unsigned int id);
 		void obtenerTopCancionesGenero(const std::string & genero) const;
 		void busqueda(std::string texto) const;
 		void filtrado(unsigned int fInicial, unsigned int fFinal) const;
@@ -26,3 +28,4 @@ class Canciones{
 
 		Lista<cancion> * listado;
 };
+#endif
